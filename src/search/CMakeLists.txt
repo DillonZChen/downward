@@ -43,8 +43,14 @@ report_bitwidth()
 set_up_build_types("Debug;Release")
 set_up_options()
 
+# Add wlplan
+list(APPEND CMAKE_PREFIX_PATH "ext/wlplan")
+find_package(wlplan REQUIRED)
+
 project(downward LANGUAGES CXX)
 add_executable(downward planner.cc)
+
+target_link_libraries(downward PRIVATE wlplan)
 
 # On Windows we have to copy all DLLs next to the generated binary.
 if (WIN32)
@@ -637,6 +643,13 @@ create_fast_downward_library(
     DEPENDS
         additive_heuristic
         task_properties
+)
+
+create_fast_downward_library(
+    NAME wlgoose_heuristic
+    HELP "The WL-GOOSE heuristic"
+    SOURCES
+        heuristics/wlgoose_heuristic
 )
 
 create_fast_downward_library(
