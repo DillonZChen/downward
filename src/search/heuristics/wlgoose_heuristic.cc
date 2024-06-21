@@ -136,8 +136,9 @@ namespace wlgoose_heuristic {
     }
 
     double h = model->predict(wlplan_state);
+    int h_round = static_cast<int>(std::round(h));
 
-    return (int)h;
+    return h_round;
   }
 
   class WlGooseHeuristicFeature : public plugins::TypedFeature<Evaluator, WlGooseHeuristic> {
